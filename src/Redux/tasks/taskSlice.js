@@ -18,7 +18,7 @@ const taskSlice = createSlice({
             
         },
         removeTask : (state, { payload })=>{
-            state.tasks.filter((task)=> task.id !== payload);
+          state.tasks =  state.tasks.filter((task)=> task.id !== payload);
         },
         updateStatus : (state, { payload })=>{
             const target = state.tasks.find((task)=> task.id == payload.id)
