@@ -1,30 +1,29 @@
 import { ArrowRightIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { useDispatch } from 'react-redux';
+import { removeTask, updateStatus } from '../../Redux/tasks/taskSlice';
 
-const TaskCard = () => {
-  const task = {
-    id: 1,
-    status: 'pending',
-    title: 'Remove Button',
-    description:
-      'We need a remove button in our task card. Meke the button red and use Heroicon for tashbin icon.',
-    date: '2023-08-28',
-    assignedTo: 'X',
-    priority: 'high',
-  };
+const TaskCard = ({task}) => {
+ const dispatch = useDispatch();
+
+ let updatedStatus;
+
+ if(task.status == 'pending'){
+  updatedStatus = 'running'
+ }else if(task.status == 'running'){
+  updatedStatus = 'done'
+ }else{
+  updatedStatus = 'archived'
+ }
 
   return (
     <div className="bg-secondary/10 rounded-md p-5">
       <h1
-        className={`text-lg font-semibold mb-3  ${
-          task.priority === 'high' ? 'text-red-500' : ''
-        } ${task.priority === 'medium' ? 'text-yellow-500' : ''} ${
-          task.priority === 'low' ? 'text-green-500' : ''
-        }`}
+        className={`text-lg font-semibold mb-3`}
       >
-        {task?.title}
+        {task?.Title}
       </h1>
-      <p className="mb-3">{task?.description}</p>
-      <p className="text-sm">Assigned to - {task?.assignedTo}</p>
+      <p className="mb-3">{task?.Description}</p>
+      <p className="text-sm">Assigned to - {task?.Assign}</p>
       <div className="flex justify-between mt-3">
         <p>{task?.date}</p>
         <div className="flex gap-3">
@@ -33,7 +32,7 @@ const TaskCard = () => {
           </button>
           <button
             onClick={() =>
-              dispatch(updateStatus({ id: task.id, status: updatedStatus }))
+              dispatch(updateStatus( {id : task.id, status: updatedStatus} ))
             }
             title="In progress"
           >
